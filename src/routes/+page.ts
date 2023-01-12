@@ -1,20 +1,18 @@
-import { createClient } from '@supabase/supabase-js';
 import type { PostgrestResponse } from '@supabase/supabase-js';
+import { supabaseClient } from '$lib/supabaseClient';
+import type { Database } from '$lib/types/database.types';
 import type { PageLoad } from './$types';
-import type { Database } from '../../database.types';
-import { env } from '$env/dynamic/public';
 
 type Message = Database['public']['Tables']['messages']['Row'];
 
-const supabase = createClient<Database>(
-	env.PUBLIC_SUPABASE_URL ?? '',
-	env.PUBLIC_SUPABASE_ANON_KEY ?? ''
-);
-
 export const load = (async () => {
-	const { data: messages }: PostgrestResponse<Message> = await supabase
-		.from('messages')
-		.select('message');
+	const { data: messages }: PostgrestResponse<Message> = await supabaseClient.from('messages').select(`
+	message,
+	created_at,
+	profiles (
+	  id
+	)
+  `);
 
 	if (!messages) {
 		return { messages: [] };
