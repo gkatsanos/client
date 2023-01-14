@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Form from '$lib/components/Form.svelte';
+  import SignUpForm from '$lib/components/SignUpForm.svelte';
 </script>
 
 <div class="flex justify-center h-full items-center">
-  <Form />
+  <SignUpForm />
 </div>

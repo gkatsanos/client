@@ -1,4 +1,6 @@
 <script lang="ts">
+  import '../app.css';
+  import { page } from '$app/stores';
   import { supabaseClient } from '$lib/supabaseClient';
   import { invalidate } from '$app/navigation';
   import { onMount } from 'svelte';
@@ -14,18 +16,23 @@
       subscription.unsubscribe();
     };
   });
+
+  // implement a logout function
+  export const logout = async () => {
+    await supabaseClient.auth.signOut();
+    invalidate('supabase:auth');
+  };
 </script>
 
-<nav class="justify-center mt-2 flex">
+<nav class="justify-end mt-2 flex">
   <a class="link mr-2" href="/">Home</a>
-  <a class="link mr-2" href="/sign-up">Sign Up</a>
-  <a class="link" href="/login">Login</a>
+  {#if $page.data.session}
+    <button class="link mr-2" on:click={logout}>Logout</button>
+    <button class="link mr-2">{$page.data.session.user.user_metadata.first_name}</button>
+  {:else}
+    <a class="link mr-2" href="/sign-up">Sign Up</a>
+    <a class="link mr-2" href="/login">Login</a>
+  {/if}
 </nav>
 
 <slot />
-
-<style>
-  .link {
-    @apply border-b border-neutral-200 p-2 hover:border-b-2 hover:border-neutral-400 hover:mb-[-1px];
-  }
-</style>
