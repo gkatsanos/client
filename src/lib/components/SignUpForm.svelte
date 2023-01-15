@@ -54,5 +54,5 @@
       placeholder="email"
     />
   </div>
-  <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+  <button type="submit" class="btn btn-primary btn-block">Create account</button>
 </form>

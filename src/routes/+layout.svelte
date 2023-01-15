@@ -24,14 +24,14 @@
   };
 </script>
 
-<nav class="justify-end mt-2 flex">
+<nav class="justify-end mt-2 flex absolute z-10 bg-slate-200">
   <a class="link mr-2" href="/">Home</a>
   {#if $page.data.session}
     <button class="link mr-2" on:click={logout}>Logout</button>
     <button class="link mr-2">{$page.data.session.user.user_metadata.first_name}</button>
   {:else}
-    <a class="link mr-2" href="/sign-up">Sign Up</a>
-    <a class="link mr-2" href="/login">Login</a>
+    <a class="link mr-2" href="/auth/sign-up">Sign Up</a>
+    <a class="link mr-2" href="/auth/login">Login</a>
   {/if}
 </nav>
 

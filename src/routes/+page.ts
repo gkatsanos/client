@@ -1,12 +1,17 @@
 import type { PostgrestResponse } from '@supabase/supabase-js';
-import { supabaseClient } from '$lib/supabaseClient';
+import { getSupabase } from '@supabase/auth-helpers-sveltekit';
 import type { Database } from '$lib/types/database.types';
 import type { PageLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 
 type Message = Database['public']['Tables']['messages']['Row'];
 
-export const load = (async () => {
-	const { data: messages }: PostgrestResponse<Message> = await supabaseClient.from('messages').select(`
+export const load = (async (event) => {
+  const { session, supabaseClient } = await getSupabase(event);
+  if (!session) {
+    throw redirect(303, '/auth/login');
+  }
+  const { data: messages }: PostgrestResponse<Message> = await supabaseClient.from('messages').select(`
 	message,
 	created_at,
 	profiles (
@@ -14,9 +19,9 @@ export const load = (async () => {
 	)
   `);
 
-	if (!messages) {
-		return { messages: [] };
-	}
+  if (!messages) {
+    return { messages: [] };
+  }
 
-	return { messages };
+  return { messages };
 }) satisfies PageLoad;
