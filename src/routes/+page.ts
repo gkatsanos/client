@@ -15,7 +15,8 @@ export const load = (async (event) => {
 	message,
 	created_at,
 	profiles (
-	  id
+    id,
+    username
 	)
   `);
 

@@ -5,6 +5,8 @@
   let password: string;
   let forgotPasswordEmail: string;
   let activeForm = 'login';
+
+  export let form: ActionData;
 </script>
 
 {#if activeForm === 'login'}
@@ -14,10 +16,19 @@
     <a class="link link-primary" href="/auth/sign-up">Make one.</a>
   </p>
   <form method="POST" use:enhance action="?/login-with-password" class="grid grid-rows-2 gap-2 mb-4">
-    <input class="input input-bordered w-full" type="email" placeholder="Your email" name="email" bind:value={email} />
     <input
       class="input input-bordered w-full"
+      required
+      type="email"
+      placeholder="Your email"
+      name="email"
+      bind:value={email}
+    />
+    <input
+      class="input input-bordered w-full"
+      class:input-error={form?.incorrect}
       type="password"
+      required
       placeholder="Your password"
       name="password"
       bind:value={password}
@@ -40,6 +51,7 @@
     <input
       class="input input-bordered w-full"
       type="email"
+      required
       placeholder="Your email"
       name="email"
       bind:value={forgotPasswordEmail}

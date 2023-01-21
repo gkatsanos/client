@@ -1,5 +1,6 @@
 import type { Actions } from './$types';
 import { supabaseClient } from '$lib/supabaseClient';
+import { redirect } from '@sveltejs/kit';
 
 export const actions: Actions = {
   default: async ({ request }) => {
@@ -27,11 +28,6 @@ export const actions: Actions = {
       };
     }
 
-    return {
-      status: 200,
-      body: {
-        user
-      }
-    };
+    throw redirect(302, '/auth/verify-email');
   }
 };

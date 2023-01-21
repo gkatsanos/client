@@ -7,6 +7,7 @@
   let email: string;
 </script>
 
+<h2 class="text-left text-2xl font-bold mb-2">Join us!</h2>
 <form method="POST" use:enhance class="max-w-lg mb-4">
   <div class="grid grid-cols-2 gap-2">
     <input
@@ -56,3 +57,4 @@
   </div>
   <button type="submit" class="btn btn-primary btn-block">Create account</button>
 </form>
+<p class="text-xs py-2">Already have an account? <a href="/auth/login" class="link link-primary">Log in</a></p>
