@@ -24,8 +24,10 @@ export const actions: Actions = {
     throw redirect(302, '/');
   },
   'login-with-password': async (event) => {
+    // add a fake delay to make it easier to see the loading state
     const { request } = event;
     const { supabaseClient } = await getSupabase(event);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const formData = await request.formData();
     const email = formData.get('email');
     const password = formData.get('password');

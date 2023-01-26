@@ -1,12 +1,13 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
-  let loading = false;
+  let isLoading = false;
   let email: string;
   let password: string;
   let forgotPasswordEmail: string;
   let activeForm = 'login';
 
   export let form: ActionData;
+  export let page: ActionData;
 </script>
 
 {#if activeForm === 'login'}
@@ -15,7 +16,19 @@
     Don't have an account?
     <a class="link link-primary" href="/auth/sign-up">Make one.</a>
   </p>
-  <form method="POST" use:enhance action="?/login-with-password" class="grid grid-rows-2 gap-2 mb-4">
+  <form
+    method="POST"
+    use:enhance={({ form, data, action, cancel }) => {
+      isLoading = true;
+
+      return async ({ update }) => {
+        await update();
+        isLoading = false;
+      };
+    }}
+    action="?/login-with-password"
+    class="grid grid-rows-2 gap-2 mb-4"
+  >
     <input
       class="input input-bordered w-full"
       required
@@ -24,21 +37,28 @@
       name="email"
       bind:value={email}
     />
-    <input
-      class="input input-bordered w-full"
-      class:input-error={form?.incorrect}
-      type="password"
-      required
-      placeholder="Your password"
-      name="password"
-      bind:value={password}
-    />
-    <input
+    <div
+      class={form?.incorrect ? 'tooltip tooltip-open tooltip-error' : ''}
+      data-tip={form?.incorrect ? 'Wrong password, try again' : null}
+    >
+      <input
+        class="input input-bordered w-full"
+        class:input-error={form?.incorrect}
+        type="password"
+        required
+        placeholder="Your password"
+        name="password"
+        disabled={isLoading}
+        bind:value={password}
+      />
+    </div>
+    <button
       type="submit"
-      class="btn btn-primary btn-md mt-2 btn-block"
-      value={loading ? 'Loading' : 'Login'}
-      disabled={loading}
-    />
+      class={isLoading ? 'loading btn btn-md mt-2' : 'btn-primary btn btn-md mt-2 btn-block'}
+      disabled={isLoading}
+    >
+      {isLoading ? 'please wait...' : 'Login'}
+    </button>
   </form>
   <p class="text-xs py-2">
     Forgot your password?
@@ -50,18 +70,20 @@
   <form method="POST" action="?/login" use:enhance class="grid gap-2">
     <input
       class="input input-bordered w-full"
+      disabled={isLoading}
       type="email"
       required
       placeholder="Your email"
       name="email"
       bind:value={forgotPasswordEmail}
     />
-    <input
+    <button
       type="submit"
-      class="btn btn-primary btn-block btn-md mt-2"
-      value={loading ? 'Loading' : 'Send magic link'}
-      disabled={loading}
-    />
+      class={isLoading ? 'loading btn btn-md mt-2' : 'btn-primary btn btn-md mt-2 btn-block'}
+      disabled={isLoading}
+    >
+      {isLoading ? 'please wait...' : 'Login'}
+    </button>
   </form>
   <p class="text-xs py-2">
     <button class="link link-primary" on:click={() => (activeForm = 'login')}>Or login with password</button>

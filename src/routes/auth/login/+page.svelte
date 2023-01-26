@@ -3,6 +3,7 @@
   import type { ActionData } from './$types';
 
   export let form: ActionData;
+  export let page: ActionData;
 </script>
 
-<LoginForm {form} />
+<LoginForm {form} {page} />
