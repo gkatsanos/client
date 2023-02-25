@@ -1,194 +1,206 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
 
 export interface Database {
   graphql_public: {
     Tables: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       graphql: {
         Args: {
-          operationName: string
-          query: string
-          variables: Json
-          extensions: Json
-        }
-        Returns: Json
-      }
-    }
+          operationName: string;
+          query: string;
+          variables: Json;
+          extensions: Json;
+        };
+        Returns: Json;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       messages: {
         Row: {
-          created_at: string
-          message: string
-          id: string
-          userId: string | null
-        }
+          created_at: string;
+          message: string;
+        };
         Insert: {
-          created_at: string
-          message?: string
-          id?: string
-          userId?: string | null
-        }
+          created_at: string;
+          id?: string;
+          message?: string;
+          userId?: string | null;
+        };
         Update: {
-          created_at?: string
-          message?: string
-          id?: string
-          userId?: string | null
-        }
-      }
-    }
+          created_at?: string;
+          id?: string;
+          message?: string;
+          userId?: string | null;
+        };
+      };
+      profiles: {
+        Row: {
+          first_name: string;
+          id: string;
+          last_name: string;
+          username: string;
+        };
+        Insert: {
+          first_name?: string | null;
+          id: string;
+          last_name?: string | null;
+          username?: string | null;
+        };
+        Update: {
+          first_name?: string | null;
+          id?: string;
+          last_name?: string | null;
+          username?: string | null;
+        };
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   storage: {
     Tables: {
       buckets: {
         Row: {
-          id: string
-          name: string
-          owner: string | null
-          created_at: string | null
-          updated_at: string | null
-          public: boolean | null
-        }
+          created_at: string | null;
+          id: string;
+          name: string;
+          owner: string | null;
+          public: boolean | null;
+          updated_at: string | null;
+        };
         Insert: {
-          id: string
-          name: string
-          owner?: string | null
-          created_at?: string | null
-          updated_at?: string | null
-          public?: boolean | null
-        }
+          created_at?: string | null;
+          id: string;
+          name: string;
+          owner?: string | null;
+          public?: boolean | null;
+          updated_at?: string | null;
+        };
         Update: {
-          id?: string
-          name?: string
-          owner?: string | null
-          created_at?: string | null
-          updated_at?: string | null
-          public?: boolean | null
-        }
-      }
+          created_at?: string | null;
+          id?: string;
+          name?: string;
+          owner?: string | null;
+          public?: boolean | null;
+          updated_at?: string | null;
+        };
+      };
       migrations: {
         Row: {
-          id: number
-          name: string
-          hash: string
-          executed_at: string | null
-        }
+          executed_at: string | null;
+          hash: string;
+          id: number;
+          name: string;
+        };
         Insert: {
-          id: number
-          name: string
-          hash: string
-          executed_at?: string | null
-        }
+          executed_at?: string | null;
+          hash: string;
+          id: number;
+          name: string;
+        };
         Update: {
-          id?: number
-          name?: string
-          hash?: string
-          executed_at?: string | null
-        }
-      }
+          executed_at?: string | null;
+          hash?: string;
+          id?: number;
+          name?: string;
+        };
+      };
       objects: {
         Row: {
-          id: string
-          bucket_id: string | null
-          name: string | null
-          owner: string | null
-          created_at: string | null
-          updated_at: string | null
-          last_accessed_at: string | null
-          metadata: Json | null
-          path_tokens: string[] | null
-        }
+          bucket_id: string | null;
+          created_at: string | null;
+          id: string;
+          last_accessed_at: string | null;
+          metadata: Json | null;
+          name: string | null;
+          owner: string | null;
+          path_tokens: string[] | null;
+          updated_at: string | null;
+        };
         Insert: {
-          id?: string
-          bucket_id?: string | null
-          name?: string | null
-          owner?: string | null
-          created_at?: string | null
-          updated_at?: string | null
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          path_tokens?: string[] | null
-        }
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+        };
         Update: {
-          id?: string
-          bucket_id?: string | null
-          name?: string | null
-          owner?: string | null
-          created_at?: string | null
-          updated_at?: string | null
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          path_tokens?: string[] | null
-        }
-      }
-    }
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+        };
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       extension: {
-        Args: { name: string }
-        Returns: string
-      }
+        Args: { name: string };
+        Returns: string;
+      };
       filename: {
-        Args: { name: string }
-        Returns: string
-      }
+        Args: { name: string };
+        Returns: string;
+      };
       foldername: {
-        Args: { name: string }
-        Returns: string[]
-      }
+        Args: { name: string };
+        Returns: string[];
+      };
       get_size_by_bucket: {
-        Args: Record<PropertyKey, never>
-        Returns: { size: number; bucket_id: string }[]
-      }
+        Args: Record<PropertyKey, never>;
+        Returns: { size: number; bucket_id: string }[];
+      };
       search: {
         Args: {
-          prefix: string
-          bucketname: string
-          limits: number
-          levels: number
-          offsets: number
-          search: string
-          sortcolumn: string
-          sortorder: string
-        }
+          prefix: string;
+          bucketname: string;
+          limits: number;
+          levels: number;
+          offsets: number;
+          search: string;
+          sortcolumn: string;
+          sortorder: string;
+        };
         Returns: {
-          name: string
-          id: string
-          updated_at: string
-          created_at: string
-          last_accessed_at: string
-          metadata: Json
-        }[]
-      }
-    }
+          name: string;
+          id: string;
+          updated_at: string;
+          created_at: string;
+          last_accessed_at: string;
+          metadata: Json;
+        }[];
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
 }

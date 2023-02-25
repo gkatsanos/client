@@ -21,9 +21,11 @@
     use:enhance={({ form, data, action, cancel }) => {
       isLoading = true;
 
-      return async ({ update }) => {
+      return async ({ update, result }) => {
         await update();
-        isLoading = false;
+        if (result.type !== 'redirect') {
+          isLoading = false;
+        }
       };
     }}
     action="?/login-with-password"

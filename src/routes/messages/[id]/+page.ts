@@ -13,14 +13,16 @@ export const load = (async (event) => {
   if (!session) {
     throw redirect(303, '/auth/login');
   }
-  const { data: messages }: PostgrestResponse<MessageWithProfile> = await supabaseClient.from('messages').select(`
-	message,
-	created_at,
-	profiles (
-    id,
-    username
-	)
-  `);
+  const { data: messages }: PostgrestResponse<MessageWithProfile> = await supabaseClient
+    .from('messages')
+    .select(
+      `
+      message,
+      created_at,
+      profiles (*)
+    `
+    )
+    .eq('id', event.params.id);
 
   if (!messages) {
     return { messages: [] };
